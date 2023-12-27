@@ -3,8 +3,8 @@ import { useState } from 'react';
 import axios from 'axios';
 
 function App() {
-  const [planet, setPlanet] = useState('planet');
-  const [body, setBody] = useState();
+  const [name, setName] = useState('Earth');
+  const [vol, setVol] = useState(1083210000000.0);
 
   const fetchData = (planet) => {
     var display;
@@ -25,13 +25,17 @@ function App() {
     }
     
     data.bodies.forEach(body => {
-      // console.log(body);
       if (body.englishName == planet) {
-        display = JSON.stringify(body);
+        display = body;
       }
     });
+
+    console.log(display);
+
+    let volume = display.vol.volValue * 10 ** display.vol.volExponent;
     
-    setBody(display);
+    setName(display.englishName);
+    setVol(volume.toFixed(1));
   }
 
   const handleSelect = (event) => {
@@ -47,7 +51,9 @@ function App() {
         <option value="Sun">Sun</option>
       </select>
 
-      <div>{ body }</div>
+      <div>Name: { name }</div>
+      <div>Volume: { vol } km^3</div>
+
     </div>
   );
 }
